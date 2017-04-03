@@ -52,13 +52,13 @@ blockedPathMessages[8] = "An ugre to dab prevents you.";
 blockedPathMessages[9] = "He's going full weeb, dont go near him!";
 //Default map location
 
-var items = ["flute", "stone", "sword"];
+var itemsIknow = ["flute", "stone", "sword"];
+var item ="";
 var itemsLocation = [1, 6, 8];
 var backpack = [];
 
 
-var itemsIknow = ["flute", "stone", "sword"];
-var item ="";
+var items = ["flute", "stone", "sword"];
 
 var mapLocation = 4;
 var playerInput = "";
@@ -78,21 +78,6 @@ var image = document.querySelector("img");
 
 //funcoipns for game
 
-function render(){
-	output.innerHTML = map[mapLocation];
-	image.src = imgs[mapLocation];
-
-	for(var i =0; i<items.length; i++){
-		if(mapLocation === itemsLocation[i] ){
-			output.innerHTML += "<br> You see a <strong>" + items[i] + "</strong> here."
-		}
-
-
-
-	}
-
-	output.innerHTML += "<br> <em>" + gameMessage +" </em>";
-}
 
 render();
 
@@ -116,8 +101,9 @@ function playGame(){
 
 		}
 		for ( i=0; i< itemsIknow.length; i++){
-			if(player.input.indexOf(itemsIknow[i]) !== -1 ){
-
+			if(mapLocation === itemsLocation[i]){
+				item = itemsIknow[i];
+				console.log("Player's item: " +item);
 			}
 		}
 		switch(action){
@@ -168,7 +154,7 @@ function playGame(){
 
 
 					case "use":
-					//useItem()
+					useItem()
 					break;
 
 
@@ -182,29 +168,48 @@ function playGame(){
 		}
 			render();
 
-	if (backpack.length !== 0){
+
+
+
+}
+function render(){
+	output.innerHTML = map[mapLocation];
+	image.src = imgs[mapLocation];
+
+	for(var i =0; i<items.length; i++){
+		if(mapLocation === itemsLocation[i] ){
+			output.innerHTML += "<br> You see a <strong>" + items[i] + "</strong> here.";
+		
+		}
+
+
+
+	}
+
+	output.innerHTML += "<br> <em>" + gameMessage +" </em>";
+		if (backpack.length !== 0){
 
 		output.innerHTML += "<br> You are carrying: "+ backpack.join(",");
 
 			}
-
-
 }
 
 function takeItem(){
-	var itemIndexNumber = items.indexOfItem();
-	if(itemIndexNumber !== -1 && itemsLocation[itemIndexNumber]){
+	var itemIndexNumber = items.indexOf(item);
+	if(itemIndexNumber !== -1 && itemsLocation[itemIndexNumber] === mapLocation){
 
 		gameMessage = "You take the: " + item +".";
 		backpack.push(item);
-		items.splice(itemIndexNumber, 1);
-		itemsLocation.splice( itemIndexNumber, 1)
+		itemsIknow.splice(itemIndexNumber, 1);
+		itemsLocation.splice( itemIndexNumber, 1);
 
 
 	}else{
-		gameMessage ="You cant do thato"
+		gameMessage ="You cant do thato";
 	}
 }
+
+
 function dropItem(){
 	if(backpack.length !== 0){
 		var backpackIndexNumber = backpack.indexOf(item);
@@ -220,9 +225,59 @@ function dropItem(){
 	}else{
 
 	gameMessage ="You're not carrying anything!";
-}
+	}
 }
 
+
+function useItem(){
+	var backpackIndexNumber = backpack.indexOf(item);
+	if(backpackIndexNumber === -1){
+		gameMessage = "You're not carrying it!";
+	}
+	if(backpack.length === 0){
+		gameMessage += "Ur packpack be empty";
+	}
+	if(backpackIndexNumber !== -1){
+		switch(item){
+			case "flute":
+			if(mapLocation === 8){
+				gameMessage= " Beautiful jojo music be play";
+				gameMessage += "old man comes oput";
+				gameMessage += "and hands u te swordo";
+				items.push("sword");
+				itemsLocation.push(mapLocation);
+			}else{
+				gameMessage = "you tru and plat the flute";
+				gameMessage += " but it no sound";
+			}
+			break;
+			case "sword":
+			if(mapLocation === 3){
+				gameMessage = " you swing and rek dragon lizard-man";
+				gameMessage += "You saev foresto";
+			}else{
+				gameMessage = "you swimg smord";
+			}
+			break;
+
+
+		case "stone":
+			if(mapLocation ===1){
+				gameMessage = " You drop the stone in za whell";
+				gameMessage += " A flute crawled its way up";
+				backpack.splice(backpackIndexNumber, 1);
+				items.push("flute");
+				itemsLocation.push(mapLocation);
+			}else{
+				gameMessage= " You shaky stone";
+			}
+			break;
+		}
+
+	}
+
+
+}
 
 
 
