@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style>
+*{
+	padding:0;
+	margin:0;
+
+
+}
+canvas{
+	background: #eee;
+	display:block;
+	margin: 0 auto;
+
+}
+
+
+
+
+
+</style>
+
+
+
+
+
+	</head>
+
+<body>
+<canvas id="myCanvas" width="480" height="320">
+</canvas>
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.rect(150, 160, 150, 50);
+ctx.fillStyle = "#00FF00";
+ctx.fill();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.arc(150, 160, 20, 0, 3.14*2, false);
+ctx.fillStyle = "#0000FF";
+ctx.fill();
+ctx.closePath();
+
+
+
+ctx.beginPath();
+ctx.arc(150, 210, 20, 0, 3.14*2, false);
+ctx.fillStyle = "#0000FF";
+ctx.fill();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.arc(300, 200, 30, 15, 3.14*2, false);
+ctx.fillStyle ="#00FF00";
+ctx.fill();
+ctx.closePath();
+
+</script>
+
+
+
+
+
+</body>
+</html>
